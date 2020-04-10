@@ -1,0 +1,6 @@
+FROM rocker/rstudio
+RUN apt-get update -qq && R -e "install.packages(c( 'remotes' ))"
+RUN R -e 'remotes::install_github("r-lib/cli")' && R -e 'remotes::install_github("gadenbuie/rsthemes")'
+RUN R -e 'rsthemes::install_rsthemes(destdir = "/home/rstudio/.R/rstudio/themes")'
+COPY add_themes.R .
+RUN Rscript add_themes.R
